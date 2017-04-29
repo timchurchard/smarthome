@@ -3,7 +3,7 @@ import json
 
 
 # Path to `git secret reveal`d secret
-CFG = '../cfg/creds.json'
+CFG = '../../cfg/creds.json'
 
 
 class Creds:
