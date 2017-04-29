@@ -1,0 +1,15 @@
+{"loop":{
+    "access_token": "dummy-oauth-token",
+    "client_ip": "127.0.0.1",
+    "host": "www.your-loop.com",
+    "low": "123",
+    "ppu": 12.34,
+    "secret": "01secret",
+    "serial": "02secret"}
+,"db":{
+    "host": "127.0.0.1",
+    "port": 3306,
+    "user": "smarthome",
+    "pass": "password1",
+    "db":   "smarthome"}
+}

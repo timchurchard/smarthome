@@ -1,3 +1,4 @@
 [submodule "subs/pyloopenergy"]
 	path = subs/pyloopenergy
 	url = https://github.com/pavoni/pyloopenergy.git
+
