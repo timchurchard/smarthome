@@ -1,3 +1,6 @@
 __pycache__
 cfg/creds.json
+cfg/smarthome.ini
+cfg/smarttemp.ini
+cfg/ioticvolume.ini
 venv
