@@ -10,5 +10,20 @@
   padding: 0 15px;
 }
 .icon-block .material-icons {
-	font-size: inherit;
+  font-size: inherit;
+}
+
+.gauge {
+  margin-top: 15%;
+  margin-bottom: 2%;
+  zoom: 0.45;
+  transform: rotate(90deg);
+}
+
+.row {
+  clear: both;
+}
+
+.col {
+  border: 1px solid #fcfcfc;
 }

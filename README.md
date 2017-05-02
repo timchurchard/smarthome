@@ -18,6 +18,8 @@ mkdir venv
 virtualenv venv
 ./venv/bin/pip3 install -r requirements.txt
 ./venv/bin/pip3 install -r subs/pyloopenergy/requirements.txt
+cd subs/pyloopenergy
+python3 setup.py install
 ```
 
 3. Switch to the new environment
@@ -35,10 +37,10 @@ IoticTemp.py simple fetch temp data from Arduino (running cfg/arduino_tmp36.uno)
 1. Loop Electricity Monitor
 
 Using a [Loop Electricity Monitor](https://www.loopenergysaver.com/) and [pavoni.pyloopenergy](https://github.com/pavoni/pyloopenergy) to record whole house energy usage.
-IoticLoop.py 
+IoticLoop.py
 
 2. RPI3 Sound Monitor + IR Remote for TV Volume
-IoticVolume.py 
+IoticVolume.py
 
 
 

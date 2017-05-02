@@ -1,11 +1,11 @@
 
-import os
-
 import tornado.httpserver
 import tornado.ioloop
 import tornado.web
 import tornado.websocket
 import tornado.gen
+
+from queue import Queue, Empty
 
 from .IoticRecv import IoticRecv
 
@@ -19,6 +19,7 @@ class IndexHandler(tornado.web.RequestHandler):
 
 
 clients = []
+queue = Queue()
 runner = None
 
 class WebSocketHandler(tornado.websocket.WebSocketHandler):
@@ -40,16 +41,19 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
 
 
 def broadcast_update():
-    results = {
-
-    }
-    for c in clients:
-        c.write_message(results)
+    global queue
+    try:
+        while True:
+            results = queue.get(False)
+            for c in clients:
+                c.write_message(results)
+    except Empty:
+        pass
 
 
 def main():
-    global runner
-    runner = IoticRecv('../cfg/smarthome.ini')
+    global runner, queue
+    runner = IoticRecv('../cfg/smarthome.ini', queue)
     runner.run(background=True)
 
     settings = {
