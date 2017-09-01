@@ -1,6 +1,8 @@
 # smarthome: Simple IoT hub and web interface
-(C) Tim Churchard tim.churchard at gmail.com
+##### Copyright (C) 2017 Tim Churchard tim.churchard at gmail.com
 
+A simple single page dashboard that provides a volume control for my living room and some stats for my house.
+![Mobile Screenshot](smarthome_screenshot_2017-09-01_08-41-51.png)
 
 ## Setup
 
@@ -41,7 +43,6 @@ IoticLoop.py
 
 2. RPI3 Sound Monitor + IR Remote for TV Volume
 IoticVolume.py
-
 
 
 3. Energenie PiMote Socket + RPI2 RF Control
