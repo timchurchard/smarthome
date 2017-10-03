@@ -1,7 +1,7 @@
 (function($){
   $(function(){
 
-    var socket = new WebSocket("ws://10.0.1.23:8888/ws");
+    var socket = new WebSocket('ws://' + window.location.hostname + ':' + window.location.port + '/ws');
 
     socket.onmessage = function(msg) {
         console.log("socket.onmessage", msg);

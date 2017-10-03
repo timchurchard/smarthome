@@ -6,7 +6,6 @@ from __future__ import unicode_literals, print_function
 
 import requests
 from datetime import datetime
-import _mysql
 
 import logging
 
@@ -38,16 +37,6 @@ class IoticTemp(ThingRunner):
         self.__light = j['light']
         return datetime.utcnow(), self.__temp, self.__light
 
-    # Store data
-    def __store_temp(self, data):
-        db = _mysql.connect(host=self.__creds.get('db', 'host'),
-                            user=self.__creds.get('db', 'user'),
-                            passwd=self.__creds.get('db', 'pass'),
-                            db=self.__creds.get('db', 'db'))
-        db.query('insert into temp_raw(time, temp, light) values("%s", %f, %i)' % data)
-        db.commit()
-        db.close()
-
     def on_startup(self):
         # Create Temperature Thing
         self.__temp_thing = self.client.create_thing("smart_temp")
@@ -57,11 +46,11 @@ class IoticTemp(ThingRunner):
             meta.set_location(52.526087, 0.391160)  # Southery White Bell Pub
         self.__temp_feed = self.__temp_thing.create_feed("data")
         self.__temp_thing.set_public(True)
+        self.__temp_feed.share(time=datetime.utcnow(), data={'temp': 14.5, 'light': 1})
 
     def main(self):
         while True:
             temp_time, temp, light = self.__get_temp()
-            self.__store_temp((temp_time, temp, light))
             self.__temp_feed.share(time=temp_time, data={'temp': temp, 'light': light})
             if self.wait_for_shutdown(10):
                 return
