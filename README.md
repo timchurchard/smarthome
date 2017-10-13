@@ -2,7 +2,8 @@
 ##### Copyright (C) 2017 Tim Churchard tim.churchard at gmail.com
 
 A simple single page dashboard that provides a volume control for my living room and some stats for my house.
-![Mobile Screenshot](smarthome_screenshot_2017-09-01_08-41-51.png)
+![Mobile Screenshot](Screenshot_2017-10-13_15-47-35.png)
+![Mobile Screenshot 2](Screenshot_2017-10-13_15-47-49.png)
 
 ## Setup
 
