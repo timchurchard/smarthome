@@ -12,10 +12,16 @@
                 $('#vol_level')[0].innerHTML = "Level: " + obj.level;
             }
             if(obj.from == 'temp') {
-                $('#temp_live')[0].innerHTML = "Hallway temperature: " + obj.temp + " C";
+                $('#temp_live')[0].innerHTML = "Hallway: " + obj.temp + " C";
             }
             if(obj.from == 'loop') {
-                $('#elec_live')[0].innerHTML = "Electricity usage: " + obj.usage + " kW";
+                $('#elec_live')[0].innerHTML = "Electricity: " + obj.usage + " kW";
+            }
+            if(obj.from == 'nest') {
+                $('#nest_live')[0].innerHTML = "Nest: " + obj.data.temp + "/" + obj.data.target + " (" + obj.data.state + ")";
+                if(obj.data.emergency) {
+                    alert("Nest Emergency Flag Set WTF ??");
+                }
             }
         } catch(e) {
             // TODO
@@ -26,7 +32,6 @@
     $('#gaugeDemo .gauge-arrow').trigger('updateGauge', 0);
 
     $('.button-collapse').sideNav();
-
 
     $('#vol_up').on('click', function(evt) {
         socket.send('vol_up');

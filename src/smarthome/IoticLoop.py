@@ -61,7 +61,8 @@ class IoticLoop(ThingRunner):
             meta.set_description("Loop Energy Data Hourly 28-day delayed")
             meta.set_location(52.526087, 0.391160)  # Southery White Bell Pub
         self.__delayed = self.__loop_public.create_feed('data')
-        self.__loop_public.set_public(True)
+        # TODO: self.__loop_public.set_public(True)
+        self.__loop_public.set_public(False)
 
     def on_shutdown(self):
         self.__loop.terminate()

@@ -12,4 +12,8 @@
     "user": "smarthome",
     "pass": "password1",
     "db":   "smarthome"}
+,"nest": {
+    "id": "product-id",
+    "secret": "secret",
+    "auth_url": "url"}
 }

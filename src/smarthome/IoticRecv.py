@@ -38,6 +38,8 @@ class IoticRecv(ThingRunner):
         self.__recv.follow(('smart_temp', 'data'), self.__temp_cb)
         # - IoticLoop
         self.__recv.follow(('smartloop private', 'data'), self.__loop_cb)
+        # - IoticNest
+        self.__recv.follow(('smartnest private', 'data'), self.__nest_cb)
 
     def __snd_ctrl_cb(self, data):
         print("snd ctrl cb got data", data)
@@ -56,6 +58,10 @@ class IoticRecv(ThingRunner):
     def __loop_cb(self, data):
         print("loop_cb got data", data)
         self.queue.put(json.dumps({'from': 'loop', 'usage': data['data']['usage']}))
+
+    def __nest_cb(self, data):
+        print("nest_cb got data", data)
+        self.queue.put(json.dumps({'from': 'nest', 'data': data['data']}))
 
     def main(self):
         while True:

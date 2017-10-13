@@ -11,18 +11,19 @@
 
     <link href="/static/style.css" rel="stylesheet">
     <link href="/static/cmGauge.css" rel="stylesheet">
-
 </head>
 <body>
 
   <nav class="light-blue lighten-1" role="navigation">
     <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">Smarthome</a>
       <ul class="right hide-on-med-and-down">
-        <li><a href="#">Navbar Link</a></li>
+        <li><a href="#">Home</a></li>
+        <li><a href="#nest">Nest</a></li>
       </ul>
 
       <ul id="nav-mobile" class="side-nav">
-        <li><a href="#">Navbar Link</a></li>
+        <li><a href="#">Home</a></li>
+        <li><a href="#nest">Nest</a></li>
       </ul>
       <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
     </div>
@@ -33,9 +34,6 @@
       <h2 class="header center orange-text">Smarthome</h2>
       <br>
     </div>
-  </div>
-
-    <div class="section">
 
       <div class="row">
         <div style="border:1">
@@ -55,7 +53,7 @@
 
         <div class="col s4 m4">
           <div id="vol_gauge" class="icon-block">
-              <div id="gaugeDemo" class="gauge gauge-big gauge-green">
+              <div id="gaugeDemo" class="gauge gauge-green">
                   <div class="gauge-arrow"></div>
               </div>
               <h5 id="vol_level">Level: 0</h5>
@@ -67,21 +65,42 @@
         <div class="col s4 m4">
           <div id="elec_usage" class="icon-block">
             <h2 class="center light-blue-text"><i class="material-icons">flash_on</i></h2>
-            <h5 id="elec_live" class="center">Electricy Usage: </h5>
+            <h5 id="elec_live" class="center">Electricity: </h5>
           </div>
         </div>
 
         <div class="col s4 m4">
           <div id="temp_hallway" class="icon-block">
             <h2 class="center light-blue-text"><i class="material-icons">store</i></h2>
-            <h5 id="temp_live" class="center">Hallway Temperature: </h5>
+            <h5 id="temp_live" class="center">Hallway: </h5>
           </div>
         </div>
 
+        <div class="col s4 m4">
+          <div id="nest_hallway" class="icon-block">
+            <h2 class="center light-blue-text"><i class="material-icons">ac_unit</i></h2>
+            <h5 id="nest_live" class="center">Nest: </h5>
+          </div>
+        </div>
+
+
+        <!-- Push the next page off the bottom! -->
+        <br><br><br><br>
+        <br><br><br><br>
+        <br><br><br><br>
       </div> <!-- row -->
 
      </div> <!-- section -->
 
+     <div class="section">
+        <div class="container">
+          <br><br>
+          <h2 class="header center orange-text">Nest</h2>
+          <br>
+        </div>
+
+
+     </div> <!-- section -->
 
     <!-- Load Libs -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

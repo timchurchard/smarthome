@@ -14,16 +14,24 @@
 }
 
 .gauge {
-  margin-top: 15%;
-  margin-bottom: 2%;
-  zoom: 0.45;
+  margin-top: 50%;
+  margin-bottom: 10%;
   transform: rotate(90deg);
+}
+
+html {
+  height: 100%;
+}
+body {
+  min-height: 100%;
+}
+.section {
+  height: 100vh;
 }
 
 .row {
   clear: both;
 }
-
 .col {
   border: 1px solid #fcfcfc;
 }
