@@ -87,6 +87,6 @@ def in_foreground(runner):
         runner.stop()
 
 if __name__ == '__main__':
-    runner = IoticLoop('../../cfg/smartloop.ini')
+    runner = IoticLoop('../cfg/smartloop.ini')
     in_foreground(runner)
 

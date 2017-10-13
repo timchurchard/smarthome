@@ -13,43 +13,33 @@ logging.basicConfig(format='%(asctime)s,%(msecs)03d %(levelname)s [%(name)s] {%(
 logger = logging.getLogger(__name__)
 # logger.setLevel(logging.DEBUG)
 
+from gpiozero import Energenie
+
 from IoticAgent import ThingRunner
 
 
-MAX = 80
-MIN = 0
-DEFAULT = 25
+LAMP = 1
 
 
-class IoticVolume(ThingRunner):
+class IoticLamp(ThingRunner):
 
     def __init__(self, config=None):
-        super(IoticVolume, self).__init__(config=config)
+        super(IoticLamp, self).__init__(config=config)
         #
-        self.__level = 0
-        self.__reset()
+        self.__lamp = Energenie(LAMP)
 
-    def __reset(self):
-        for x in range(0, int(MAX/2)):
-            self.__down()
-        for x in range(0, DEFAULT):
-            self.__up()
+    def __lamp_on(self):
+        self.__lamp.on()
 
-    def __up(self):
-        os.system("irsend SEND_ONCE ir_vol.conf KEY_VOLUMEUP")
-        self.__level += 1
-
-    def __down(self):
-        os.system("irsend SEND_ONCE ir_vol.conf KEY_VOLUMEDOWN")
-        if self.__level > 0:
-            self.__level -= 1
+    def __lamp_off(self):
+        self.__lamp.off()
 
     def on_startup(self):
         # Create snd_ctrl Thing
-        self.__thing = self.client.create_thing("snd ctrl")
+        self.__thing = self.client.create_thing("lamp ctrl")
         with self.__thing.get_meta() as meta:
-            meta.set_label("Tim's House RPI Volume Control")
-            meta.set_description("RPI3 with IR GPIO board")
+            meta.set_label("Tim's House RPI Energenie Lamp Control")
+            meta.set_description("RPI with Energenie GPIO board")
             meta.set_location(52.526087, 0.391160)  # Southery White Bell Pub
         self.__feed = self.__thing.create_feed("feed")
         self.__ctrl = self.__thing.create_control("ctrl", self.__ctrl_cb)
@@ -57,20 +47,26 @@ class IoticVolume(ThingRunner):
 
     def __ctrl_cb(self, data):
         if 'data' in data and 'cmd' in data['data']:
-            if data['data']['cmd'] == 'reset':
-                self.__reset()
-            elif data['data']['cmd'] == 'up':
-                self.__up()
-            elif data['data']['cmd'] == 'down':
-                self.__down()
+            if data['data']['cmd'] == 'on':
+                print("__ctrl_cb: Turning lamp on")
+                self.__lamp_on()
+            elif data['data']['cmd'] == 'off':
+                print("__ctrl_cb: Turning lamp off")
+                self.__lamp_off()
             else:
+                print("__ctrl_cb: Unknown data", data['data'])
                 return
-            self.__feed.share({'state': data['data']['cmd'], 'level': self.__level})
+            self.__feed.share({'state': self.__lamp.is_active})
 
     def main(self):
         while True:
-            if self.wait_for_shutdown(10):
+            if self.wait_for_shutdown(30):
+                self.__lamp.close()
                 return
+            try:
+                self.__feed.share({'state': self.__lamp.is_active})
+            except:
+                pass
 
 def in_foreground(runner):
     try:
@@ -82,5 +78,6 @@ def in_foreground(runner):
         runner.stop()
 
 if __name__ == '__main__':
-    runner = IoticVolume('../../cfg/ioticvolume.ini')
+    runner = IoticLamp('../cfg/smartlamp.ini')
     in_foreground(runner)
+

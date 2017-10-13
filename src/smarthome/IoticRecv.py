@@ -40,6 +40,19 @@ class IoticRecv(ThingRunner):
         self.__recv.follow(('smartloop private', 'data'), self.__loop_cb)
         # - IoticNest
         self.__recv.follow(('smartnest private', 'data'), self.__nest_cb)
+        # - Energenie Living room Lamp
+        self.__lamp_ctrl = self.__recv.attach(('lamp ctrl', 'ctrl'))
+        self.__recv.follow(('lamp ctrl', 'feed'), self.__lamp_ctrl_cb)
+
+    def __lamp_ctrl_cb(self, data):
+        print("lamp ctrl cb got data", data)
+        self.queue.put(json.dumps({'from': 'lamp_ctrl', 'state': data['data']['state']}))
+
+    def lamp_ctrl_on(self):
+        self.__lamp_ctrl.ask({'cmd': 'on'})
+
+    def lamp_ctrl_off(self):
+        self.__lamp_ctrl.ask({'cmd': 'off'})
 
     def __snd_ctrl_cb(self, data):
         print("snd ctrl cb got data", data)

@@ -44,8 +44,7 @@ IoticLoop.py
 2. RPI3 Sound Monitor + IR Remote for TV Volume
 IoticVolume.py
 
-
-3. Energenie PiMote Socket + RPI2 RF Control
-IoticSocket.py
-
+3. Energenie PiMote Socket + RPI2 RF Control (Living room lamp)
+IoticLamp.py
+Note: Using gpiozero module works best with python2 outside of venv!
 

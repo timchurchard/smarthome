@@ -65,6 +65,6 @@ def in_foreground(runner):
         runner.stop()
 
 if __name__ == '__main__':
-    runner = IoticTemp('../../cfg/smarttemp.ini')
+    runner = IoticTemp('../cfg/smarttemp.ini')
     in_foreground(runner)
 

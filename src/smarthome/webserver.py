@@ -38,6 +38,11 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
             runner.snd_ctrl_vol_up()
         elif msg == 'vol_down':
             runner.snd_ctrl_vol_down()
+        #
+        if msg == 'lamp_on':
+            runner.lamp_ctrl_on()
+        elif msg == 'lamp_off':
+            runner.lamp_ctrl_off()
 
 
 def broadcast_update():
