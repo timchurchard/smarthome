@@ -14,8 +14,7 @@
 }
 
 .gauge {
-  margin-top: 50%;
-  margin-bottom: 10%;
+  margin: 3vh 3vw;
   transform: rotate(90deg);
 }
 
