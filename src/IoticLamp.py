@@ -15,13 +15,13 @@ logger = logging.getLogger(__name__)
 
 from gpiozero import Energenie
 
-from IoticAgent import ThingRunner
+from IoticAgent import RetryingThingRunner
 
 
 LAMP = 1
 
 
-class IoticLamp(ThingRunner):
+class IoticLamp(RetryingThingRunner):
 
     def __init__(self, config=None):
         super(IoticLamp, self).__init__(config=config)

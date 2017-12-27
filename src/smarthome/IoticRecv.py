@@ -11,10 +11,10 @@ logging.basicConfig(format='%(asctime)s,%(msecs)03d %(levelname)s [%(name)s] {%(
 logger = logging.getLogger(__name__)
 # logger.setLevel(logging.DEBUG)
 
-from IoticAgent import ThingRunner
+from IoticAgent import RetryingThingRunner
 
 
-class IoticRecv(ThingRunner):
+class IoticRecv(RetryingThingRunner):
 
     def __init__(self, config, queue):
         super(IoticRecv, self).__init__(config=config)

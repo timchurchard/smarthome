@@ -15,17 +15,17 @@ logging.basicConfig(format='%(asctime)s,%(msecs)03d %(levelname)s [%(name)s] {%(
 logger = logging.getLogger(__name__)
 # logger.setLevel(logging.DEBUG)
 
-from IoticAgent import ThingRunner
+from IoticAgent import RetryingThingRunner
 
 
-from Creds import Creds
+from smarthome.Creds import Creds
 
 
 # How often to poll the Nest API
 LIVE_FREQ = 30
 
 
-class IoticNest(ThingRunner):
+class IoticNest(RetryingThingRunner):
 
     def __init__(self, config=None):
         super(IoticNest, self).__init__(config=config)
@@ -105,6 +105,6 @@ def in_foreground(runner):
         runner.stop()
 
 if __name__ == '__main__':
-    runner = IoticNest('../../cfg/smartnest.ini')
+    runner = IoticNest('../cfg/smartnest.ini')
     in_foreground(runner)
 

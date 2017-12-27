@@ -13,7 +13,7 @@ logging.basicConfig(format='%(asctime)s,%(msecs)03d %(levelname)s [%(name)s] {%(
 logger = logging.getLogger(__name__)
 # logger.setLevel(logging.DEBUG)
 
-from IoticAgent import ThingRunner
+from IoticAgent import RetryingThingRunner
 
 
 MAX = 80
@@ -21,7 +21,7 @@ MIN = 0
 DEFAULT = 25
 
 
-class IoticVolume(ThingRunner):
+class IoticVolume(RetryingThingRunner):
 
     def __init__(self, config=None):
         super(IoticVolume, self).__init__(config=config)

@@ -13,14 +13,14 @@ logging.basicConfig(format='%(asctime)s,%(msecs)03d %(levelname)s [%(name)s] {%(
 logger = logging.getLogger(__name__)
 # logger.setLevel(logging.DEBUG)
 
-from IoticAgent import ThingRunner
+from IoticAgent import RetryingThingRunner
 
 import pyloopenergy
 
-from Creds import Creds
+from smarthome.Creds import Creds
 
 
-class IoticLoop(ThingRunner):
+class IoticLoop(RetryingThingRunner):
 
     def __init__(self, config=None):
         super(IoticLoop, self).__init__(config=config)

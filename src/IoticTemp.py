@@ -14,15 +14,15 @@ logging.basicConfig(format='%(asctime)s,%(msecs)03d %(levelname)s [%(name)s] {%(
 logger = logging.getLogger(__name__)
 # logger.setLevel(logging.DEBUG)
 
-from IoticAgent import ThingRunner
+from IoticAgent import RetryingThingRunner
 
-from Creds import Creds
+from smarthome.Creds import Creds
 
 
 TEMP_ADDR = 'http://10.0.1.20/'
 
 
-class IoticTemp(ThingRunner):
+class IoticTemp(RetryingThingRunner):
 
     def __init__(self, config):
         super(IoticTemp, self).__init__(config=config)
