@@ -3,7 +3,7 @@
 
 A simple single page dashboard that provides a volume control for my living room and some stats for my house.
 ![Mobile Screenshot](Screenshot_2017-10-13_15-47-35.png)
-![Mobile Screenshot 2](Screenshot_2017-10-13_15-47-49.png)
+![Mobile Screenshot 2](Screenshot_2017-12-28_13-15-17.png)
 
 ## Setup
 
