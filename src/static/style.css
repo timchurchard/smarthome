@@ -11,7 +11,12 @@
 }
 .icon-block .material-icons {
   font-size: inherit;
+  height: 80%;
 }
+
+/*h2 {
+  margin: 1.35em 0 0.35em 0;
+}*/
 
 .gauge {
   margin: 3vh 3vw;
@@ -30,7 +35,16 @@ body {
 
 .row {
   clear: both;
+  margin-bottom: 5px;
 }
 .col {
   border: 1px solid #fcfcfc;
+}
+
+fieldset {
+    display: block;
+    margin: 1px;
+    padding: 0.4em;
+    border: 2px solid black;
+    font-size: 18px;
 }

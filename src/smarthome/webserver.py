@@ -43,6 +43,15 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
             runner.lamp_ctrl_on()
         elif msg == 'lamp_off':
             runner.lamp_ctrl_off()
+        #
+        if msg in ['upstairs_lamp_off', 'upstairs_lamp_on', 'bedroom_lamp_off', 'bedroom_lamp_on', 'liv_main_off', 'liv_main_on', 'kitchen_lamp_on', 'kitchen_lamp_off', 'front_lamp_on', 'front_lamp_off']:
+            if msg.endswith('_off'):
+                cmd = 'off'
+                msg = msg.replace('_off', '')
+            else:
+                cmd = 'on'
+                msg = msg.replace('_on', '')
+            runner.lights_ctrl(msg, cmd)
 
 
 def broadcast_update():

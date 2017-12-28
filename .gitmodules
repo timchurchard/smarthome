@@ -2,3 +2,6 @@
 	path = subs/pyloopenergy
 	url = https://github.com/pavoni/pyloopenergy.git
 
+[submodule "subs/pytradfri"]
+	path = subs/pytradfri
+	url = https://github.com/ggravlingen/pytradfri

@@ -16,4 +16,9 @@
     "id": "product-id",
     "secret": "secret",
     "auth_url": "url"}
+,"lights":{
+    "ikea_ip": "",
+    "ikea_key": "",
+    "hue_ip": "",
+    "hue_key": ""}
 }

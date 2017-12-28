@@ -6,4 +6,5 @@ cfg/smartloop.ini
 cfg/smartnest.ini
 cfg/smartlamp.ini
 cfg/ioticvolume.ini
+cfg/ioticlights.ini
 venv

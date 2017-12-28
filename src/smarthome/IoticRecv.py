@@ -31,7 +31,7 @@ class IoticRecv(RetryingThingRunner):
             meta.set_location(52.526087, 0.391160)  # Southery White Bell Pub
 
         # Setup subscriptions
-        # - snd_ctrl
+        # - IoticVolume - snd_ctrl
         self.__snd_ctrl = self.__recv.attach(('snd ctrl', 'ctrl'))
         self.__recv.follow(('snd ctrl', 'feed'), self.__snd_ctrl_cb)
         # - IoticTemp
@@ -40,12 +40,19 @@ class IoticRecv(RetryingThingRunner):
         self.__recv.follow(('smartloop private', 'data'), self.__loop_cb)
         # - IoticNest
         self.__recv.follow(('smartnest private', 'data'), self.__nest_cb)
-        # - Energenie Living room Lamp
+        # - IoticLamp - Energenie Living room Lamp
         self.__lamp_ctrl = self.__recv.attach(('lamp ctrl', 'ctrl'))
-        self.__recv.follow(('lamp ctrl', 'feed'), self.__lamp_ctrl_cb)
+        self.__recv.follow(('lamp ctrl', 'feed'), self.__lamp_data_cb)
+        # - IoticLights - Ikea & Philips Lights
+        self.__lights_ctrl = self.__recv.attach(('lights', 'ctrl'))
+        self.__recv.follow(('lights', 'data'), self.__lights_data_cb)
 
-    def __lamp_ctrl_cb(self, data):
-        print("lamp ctrl cb got data", data)
+    def __lights_data_cb(self, data):
+        print("lights data cb got data", data)
+        self.queue.put(json.dumps({'from': 'lights_ctrl', 'data': data['data']}))
+
+    def __lamp_data_cb(self, data):
+        print("lamp data cb got data", data)
         self.queue.put(json.dumps({'from': 'lamp_ctrl', 'state': data['data']['state']}))
 
     def lamp_ctrl_on(self):
@@ -63,6 +70,9 @@ class IoticRecv(RetryingThingRunner):
 
     def snd_ctrl_vol_down(self):
         self.__snd_ctrl.ask({'cmd': 'down'})
+
+    def lights_ctrl(self, lamp, cmd):
+        self.__lights_ctrl.ask({'lamp': lamp, 'cmd': cmd})
 
     def __temp_cb(self, data):
         print("temp_cb got data", data)

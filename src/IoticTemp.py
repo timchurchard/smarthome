@@ -31,11 +31,15 @@ class IoticTemp(RetryingThingRunner):
         self.__light = 0
 
     def __get_temp(self):
-        r = requests.get(TEMP_ADDR)
-        j = r.json()
-        self.__temp = j['temp']
-        self.__light = j['light']
-        return datetime.utcnow(), self.__temp, self.__light
+        try:
+            r = requests.get(TEMP_ADDR)
+            j = r.json()
+            self.__temp = j['temp']
+            self.__light = j['light']
+            return datetime.utcnow(), self.__temp, self.__light
+        except:
+            pass
+        return None, None, None
 
     def on_startup(self):
         # Create Temperature Thing
@@ -51,7 +55,10 @@ class IoticTemp(RetryingThingRunner):
     def main(self):
         while True:
             temp_time, temp, light = self.__get_temp()
-            self.__temp_feed.share(time=temp_time, data={'temp': temp, 'light': light})
+            if temp_time is not None:
+                self.__temp_feed.share(time=temp_time, data={'temp': temp, 'light': light})
+            else:
+                logger.info("Failed to get temp")
             if self.wait_for_shutdown(10):
                 return
 

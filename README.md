@@ -19,8 +19,8 @@ sudo apt-get install python3-numpy python3-scipy python3-pyaudio
 sudo pip3 install virtualenv
 mkdir venv
 virtualenv venv
-./venv/bin/pip3 install -r requirements.txt
-./venv/bin/pip3 install -r subs/pyloopenergy/requirements.txt
+./venv/bin/pip3 install -U -r requirements.txt
+./venv/bin/pip3 install -U -r subs/pyloopenergy/requirements.txt
 cd subs/pyloopenergy
 python3 setup.py install
 ```
@@ -49,3 +49,11 @@ IoticVolume.py
 IoticLamp.py
 Note: Using gpiozero module works best with python2 outside of venv!
 
+4. Lights (IKEA & Philips Hue)
+IoticLights.py
+
+
+## Links for lights
+
+https://github.com/ggravlingen/pytradfri
+https://github.com/quentinsf/qhue/
