@@ -63,10 +63,7 @@ class IoticLamp(RetryingThingRunner):
             if self.wait_for_shutdown(30):
                 self.__lamp.close()
                 return
-            try:
-                self.__feed.share({'state': self.__lamp.is_active})
-            except:
-                pass
+            self.__feed.share({'state': self.__lamp.is_active})
 
 def in_foreground(runner):
     try:

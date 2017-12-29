@@ -71,10 +71,8 @@ class IoticVolume(RetryingThingRunner):
         while True:
             if self.wait_for_shutdown(30):
                 return
-            try:
-                self.__feed.share({'state': 'update', 'level': self.__level})
-            except:
-                pass
+            self.__feed.share({'state': 'update', 'level': self.__level})
+
 
 def in_foreground(runner):
     try:
