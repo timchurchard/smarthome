@@ -52,8 +52,23 @@ Note: Using gpiozero module works best with python2 outside of venv!
 4. Lights (IKEA & Philips Hue)
 IoticLights.py
 
+5. Amazon Dash
+IoticDash_upstairs.py : Turn on/off all upstairs lights.
+
 
 ## Links for lights
 
 https://github.com/ggravlingen/pytradfri
+
 https://github.com/quentinsf/qhue/
+
+
+## Using scapy in virtualenv
+
+Note: I run IoticDash.py as root !
+
+- switch to root user
+- activate venv
+- pip3 install scapy-python3
+- python3 IoticDash.py
+
