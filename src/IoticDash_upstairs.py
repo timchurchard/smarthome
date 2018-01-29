@@ -12,9 +12,7 @@ logging.basicConfig(format='%(asctime)s,%(msecs)03d %(levelname)s [%(name)s] {%(
 logger = logging.getLogger(__name__)
 # logger.setLevel(logging.DEBUG)
 
-from scapy.all import *
-
-from IoticAgent import RetryingThingRunner
+from IoticAgent import ThingRunner
 from IoticAgent.Core.compat import Event
 
 
@@ -27,7 +25,7 @@ LIGHTS = ['upstairs_lamp', 'bedroom_lamp']
 button_evt = Event()
 
 
-class IoticDash(RetryingThingRunner):
+class IoticDash(ThingRunner):
 
     def __init__(self, config=None):
         super(IoticDash, self).__init__(config=config)
@@ -56,26 +54,66 @@ class IoticDash(RetryingThingRunner):
                 return
 
 
-def arp_display(pkt):
-    global button_evt
-    if pkt.haslayer(ARP): # Needed for Raspberry Pi
-        if pkt[ARP].op == 1: #who-has (request)
-            if pkt[ARP].hwsrc == DUREX_DASH_MAC:
-                print("Pushed Durex!")
-                button_evt.set()
-            if pkt[ARP].hwsrc == SHEBA_DASH_MAC:
-                print("Pushed Sheba!")
-                button_evt.set()
+# dashbutton.py - https://gist.github.com/mr-pj/75297864abef5c8f2d5c134be2656023#file-dashbutton-py
+
+from pydhcplib.dhcp_network import *
+
+netopt = {'client_listen_port':"68", 'server_listen_port':"67", 'listen_address':"0.0.0.0"}
+
+class Server(DhcpServer):
+    def __init__(self, options, dashbuttons):
+        DhcpServer.__init__(self, options["listen_address"],
+                                options["client_listen_port"],
+                                options["server_listen_port"])
+        self.dashbuttons = dashbuttons
+
+    def HandleDhcpRequest(self, packet):
+        mac = self.hwaddr_to_str(packet.GetHardwareAddress())
+        self.dashbuttons.press(mac)
+
+
+    def hwaddr_to_str(self, hwaddr):
+        result = []
+        hexsym = ['0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f']
+        for iterator in range(6) :
+            result += [str(hexsym[hwaddr[iterator]/16]+hexsym[hwaddr[iterator]%16])]
+        return ':'.join(result)
+
+class DashButtons():
+    def __init__(self):
+        self.buttons = {}
+
+    def register(self, mac, function):
+        self.buttons[mac] = function
+
+    def press(self, mac):
+        if mac in self.buttons:
+            self.buttons[mac]()
+            return True
+        return False
+
+# dashbutton.py - end
+
+
+def button_press():
+    print("Got Dash button press!")
+    button_evt.set()
 
 
 def main():
+    dashbuttons = DashButtons()
+    dashbuttons.register(DUREX_DASH_MAC, button_press)
+    dashbuttons.register(SHEBA_DASH_MAC, button_press)
+    server = Server(netopt, dashbuttons)
+
     runner = IoticDash('../cfg/ioticdash.ini')
     runner.run(background=True)
 
-    try:
-        sniff(prn=arp_display, filter="arp", store=0, count=0)
-    except:
-        pass
+    while True:
+        try:
+            server.GetNextDhcpPacket()
+        except KeyboardInterrupt:
+            break
 
     runner.stop()
 
